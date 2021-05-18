@@ -2,7 +2,16 @@ var template = Handlebars.compile(document.getElementById("link-template").inner
 
 let authPassword
 document.addEventListener('DOMContentLoaded', function(){
-    authPassword = prompt("enter password")
+    authPassword = localStorage.getItem("password")
+    if ( authPassword === null) {
+        pass = prompt("enter password")
+        sha256(pass).then(function (data) {
+            authPassword = data
+            localStorage.setItem("password", authPassword)
+            refresh()
+        })
+        return
+    }
 
     refresh()
 })
@@ -11,20 +20,23 @@ document.getElementById("submit-link").onclick = function() {
     submitlinks()
 };
 
+document.getElementById("auth-reset").onclick = function() {
+    localStorage.removeItem("password")
+    window.location.reload()
+};
+
 function submitlinks(){
     link = document.getElementById("new-link").value
-    sha256(authPassword).then(function (auth) {
-        fetch('/api/add', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8',
-                'Authorization' : auth
-            },
-            body : link
-        }).then(function (data) {
-            data.text().then(function () {
-                refresh()
-            })
+    fetch('/api/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+            'Authorization' : authPassword
+        },
+        body : link
+    }).then(function (data) {
+        data.text().then(function () {
+            refresh()
         })
     })
 }
@@ -35,23 +47,22 @@ function clearLinks() {
 
 function refresh(){
     clearLinks()
-    sha256(authPassword).then(function (auth) {
-        fetch('/api/list', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8',
-                'Authorization' : auth
-            },
-        }).then(function (data) {
-            data.json().then(function (result) {
-                generateLinks(result)
-            })
+    fetch('/api/list', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+            'Authorization' : authPassword
+        },
+    }).then(function (data) {
+        data.json().then(function (result) {
+            generateLinks(result)
         })
     })
 }
 
 function generateLinks(links) {
     for (i = 0; i < links.length; i++){
+        links[i].CreatedAt = new Date( links[i].CreatedAt).toDateString()
         document.getElementById("links").innerHTML += template(links[i])
     }
 }
