@@ -21,7 +21,8 @@ func GetMeta(url *url.URL) (interfaces.Metadata, error) {
 	}
 
 	return &meta{
-		Title:      html.EscapeString(parseTitle(htmlData)),
-		PreviewURL: parsePreview(htmlData),
+		Title:       html.EscapeString(title(htmlData)),
+		PreviewURL:  preview(htmlData),
+		Description: description(htmlData),
 	}, nil
 }

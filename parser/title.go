@@ -4,9 +4,9 @@ import (
 	"golang.org/x/net/html"
 )
 
-func parseTitle(document *html.Node) string {
-	title, _ := traverse(document, isTitleElement)
-	return title.FirstChild.Data
+func title(document *html.Node) string {
+	text, _ := traverse(document, isTitleElement)
+	return text.FirstChild.Data
 }
 
 func isTitleElement(n *html.Node) bool {

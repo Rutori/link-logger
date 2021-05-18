@@ -40,9 +40,10 @@ func Add(_ context.Context, data *http.Request) (response *controller.Response, 
 	}
 
 	res := db.Get().Create(&models.Links{
-		Title:   meta.GetTitle(),
-		Address: pageURL.String(),
-		Preview: meta.GetPreview(),
+		Title:       meta.GetTitle(),
+		Address:     pageURL.String(),
+		Preview:     meta.GetPreview(),
+		Description: meta.GetDescription(),
 	})
 
 	if res.Error != nil {

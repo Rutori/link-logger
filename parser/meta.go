@@ -3,8 +3,13 @@ package parser
 import "net/url"
 
 type meta struct {
-	Title      string
-	PreviewURL *url.URL
+	Title       string
+	Description string
+	PreviewURL  *url.URL
+}
+
+func (m meta) GetDescription() string {
+	return m.Description
 }
 
 func (m meta) GetTitle() string {

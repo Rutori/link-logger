@@ -6,7 +6,7 @@ import (
 	"golang.org/x/net/html"
 )
 
-func parsePreview(document *html.Node) *url.URL {
+func preview(document *html.Node) *url.URL {
 	image, exists := traverse(document, isPreview)
 	if !exists {
 		return nil

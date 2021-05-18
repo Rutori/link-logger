@@ -9,7 +9,7 @@ import (
 // GetAllLinks returns all links
 func GetAllLinks() ([]interfaces.Page, error) {
 	result := make([]*models.Links, 0)
-	err := Get().Find(&result).Error
+	err := Get().Order("created_at desc").Find(&result).Error
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}

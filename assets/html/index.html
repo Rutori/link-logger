@@ -1,9 +1,64 @@
-<html>
+<!doctype html>
+<html lang="ru">
 <head>
-    <script src="/assets/js/index.js"></script>
-    <title>My website</title>
-</head>
-    <body>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    </body>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">Reload</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExample07">
+            <form class="form-inline my-2 my-md-0">
+                <input class="form-control" id="new-link" type="text" placeholder="Link" aria-label="Link">
+            </form>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" id="submit-link"  href="#">Submit</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container mt-5">
+<main role="main">
+    <div class="jumbotron">
+        <div class="row d-flex justify-content-around" id="links">
+        </div>
+    </div>
+</main>
+</div>
+
+<div class="d-none templates">
+    <div id="link-template">
+        <div class="card m-1 col-lg-3">
+            {{#if Preview}}
+            <img src="{{Preview}}" class="card-img-top" alt="..."/>
+            {{/if}}
+            <div class="card-body">
+                <h5 class="card-title">{{Title}}</h5>
+                <b>{{CreatedAt}}</b>
+                <p class="card-text">
+                    {{Description}}
+                </p>
+                <a target="_blank" href="{{Address}}" class="btn btn-primary">Open</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+<script src="/assets/js/index.js"></script>
+</body>
 </html>
