@@ -10,6 +10,7 @@ type password struct {
 }
 
 func (p *password) Verify(authHeader string) bool {
+	fmt.Println(p)
 	return authHeader == p.Hash
 }
 
