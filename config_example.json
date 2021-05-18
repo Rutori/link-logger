@@ -1,5 +1,7 @@
 {
   "port" : 8080,
+  "tls_port": 8081,
+  "host": "127.0.0.1",
   "admin_password": "not_a_real_password_duh",
   "db_name" : "Links.db",
   "key" : "key.pem",
