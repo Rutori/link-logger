@@ -1,0 +1,6 @@
+package interfaces
+
+type Metadata interface {
+	GetTitle() string
+	GetPreview() string
+}
