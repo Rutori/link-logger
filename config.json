@@ -1,5 +1,0 @@
-{
-  "port" : 8080,
-  "admin_password": "not_a_real_password_duh",
-  "db_name" : "Links.db"
-}
