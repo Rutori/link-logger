@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"io/ioutil"
 	"net/http"
 	"net/url"
 
@@ -21,8 +22,13 @@ func (Exists) Error() string {
 	return "already exists"
 }
 
-func Add(_ context.Context, data []byte) (response []byte, err error) {
-	pageURL, err := url.Parse(string(data))
+func Add(_ context.Context, data *http.Request) (response []byte, err error) {
+	body, err := ioutil.ReadAll(data.Body)
+	if err != nil {
+		return nil, Unreadable{}
+	}
+
+	pageURL, err := url.Parse(string(body))
 	if err != nil {
 		return nil, err
 	}

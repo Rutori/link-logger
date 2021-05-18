@@ -1,9 +1,12 @@
 package controller
 
-import "context"
+import (
+	"context"
+	"net/http"
+)
 
 type handle struct {
 	Path   string
 	Method string
-	Func   func(ctx context.Context, request []byte) (response []byte, err error)
+	Func   func(ctx context.Context, request *http.Request) (response []byte, err error)
 }

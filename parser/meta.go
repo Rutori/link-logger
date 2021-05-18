@@ -12,5 +12,8 @@ func (m meta) GetTitle() string {
 }
 
 func (m meta) GetPreview() string {
+	if m.PreviewURL == nil {
+		return ""
+	}
 	return m.PreviewURL.String()
 }

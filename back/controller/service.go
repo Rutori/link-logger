@@ -3,7 +3,6 @@ package controller
 import (
 	"context"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 
@@ -26,7 +25,7 @@ func NewService(root string, authType Auth) *Service {
 	}
 }
 
-func (s *Service) RegisterHandle(path string, method string, handler func(ctx context.Context, request []byte) (response []byte, err error)) {
+func (s *Service) RegisterHandle(path string, method string, handler func(ctx context.Context, request *http.Request) (response []byte, err error)) {
 	switch method {
 	case http.MethodPost, http.MethodGet:
 
@@ -53,8 +52,11 @@ func (s *Service) ServeHTTP(resp http.ResponseWriter, req *http.Request) {
 
 	handler, correct := s.Handles[req.RequestURI]
 	if !correct {
-		resp.WriteHeader(http.StatusNotFound)
-		return
+		handler, correct = s.Handles[fmt.Sprintf("%s/*", s.RootPath)] // try to catch the common handler
+		if !correct {
+			resp.WriteHeader(http.StatusNotFound)
+			return
+		}
 	}
 
 	if handler.Method != req.Method {
@@ -62,13 +64,7 @@ func (s *Service) ServeHTTP(resp http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	body, err := ioutil.ReadAll(req.Body)
-	if err != nil {
-		resp.WriteHeader(http.StatusBadRequest)
-		return
-	}
-
-	response, err := handler.Func(context.Background(), body)
+	response, err := handler.Func(context.Background(), req)
 	if err != nil {
 		apiEr, isAPIerr := err.(interfaces.APIError)
 		if !isAPIerr {

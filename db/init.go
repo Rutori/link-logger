@@ -8,10 +8,9 @@ import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
+	"link-logger/config"
 	"link-logger/db/models"
 )
-
-const dbFileName = "Links.db"
 
 // databaseConn database connection
 var databaseConn *gorm.DB
@@ -24,7 +23,7 @@ func Init() (err error) {
 
 		err = databaseConn.AutoMigrate(&models.Links{})
 	}()
-	databaseConn, err = gorm.Open(sqlite.Open(dbFileName), &gorm.Config{
+	databaseConn, err = gorm.Open(sqlite.Open(config.Storage.DBName), &gorm.Config{
 		Logger: logger.New(
 			log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
 			logger.Config{
@@ -45,7 +44,7 @@ func Init() (err error) {
 }
 
 func createDB() error {
-	file, err := os.Create(dbFileName)
+	file, err := os.Create(config.Storage.DBName)
 	if err != nil {
 		return errors.WithStack(err)
 	}
