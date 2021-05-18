@@ -62,7 +62,7 @@ function refresh(){
 
 function generateLinks(links) {
     for (i = 0; i < links.length; i++){
-        links[i].CreatedAt = new Date( links[i].CreatedAt).toDateString()
+        links[i].CreatedAt = new Date( links[i].CreatedAt).toGMTString()
         document.getElementById("links").innerHTML += template(links[i])
     }
 }
