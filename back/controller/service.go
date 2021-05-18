@@ -46,9 +46,15 @@ func (s *Service) RegisterHandle(path string, method string, handler func(ctx co
 }
 
 func (s *Service) ServeHTTP(resp http.ResponseWriter, req *http.Request) {
-	if s.Verification != nil && s.Verification.Verify(req.Header.Get("Authorization")) == false {
-		resp.WriteHeader(http.StatusUnauthorized)
-		return
+	if s.Verification != nil {
+		auth := req.Header.Get("authorization")
+		if auth == "" {
+			auth = req.Header.Get("Authorization")
+		}
+		if !s.Verification.Verify(auth) {
+			resp.WriteHeader(http.StatusUnauthorized)
+			return
+		}
 	}
 
 	handler, correct := s.Handles[req.RequestURI]
