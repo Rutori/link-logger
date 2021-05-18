@@ -1,9 +1,9 @@
 var template = Handlebars.compile(document.getElementById("link-template").innerHTML)
 
-var authPassword = "not_a_real_password_duh"
-
-
+let authPassword
 document.addEventListener('DOMContentLoaded', function(){
+    authPassword = prompt("enter password")
+
     refresh()
 })
 
