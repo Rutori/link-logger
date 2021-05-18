@@ -15,23 +15,19 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="/">Reload</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
 
-        <div class="collapse navbar-collapse" id="navbarsExample07">
-            <form class="form-inline my-2 my-md-0">
+        <div class="navbar-nav mr-auto">
+            <form class="form-inline my-2 my-md-0 mx-md-2">
                 <input class="form-control" id="new-link" type="text" placeholder="Link" aria-label="Link">
             </form>
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" id="submit-link"  href="#">Submit</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="auth-reset"  href="#">Reset auth</a>
-                </li>
-            </ul>
+            <a class="btn btn-success" id="submit-link"  href="#">Submit</a>
         </div>
+        <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item">
+                <a class="btn btn-danger" id="auth-reset"  href="#">Reset auth</a>
+            </li>
+        </ul>
     </div>
 </nav>
 <div class="container mt-5">
