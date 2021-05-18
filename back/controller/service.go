@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 
+	"link-logger/back/controller/credentials"
 	"link-logger/interfaces"
 )
 
@@ -13,11 +14,11 @@ type Service struct {
 	Handles      map[string]*handle
 	RootPath     string
 	Password     string
-	Verification Auth
+	Verification credentials.Auth
 }
 
 // NewService creates service
-func NewService(root string, authType Auth) *Service {
+func NewService(root string, authType credentials.Auth) *Service {
 	return &Service{
 		Handles:      make(map[string]*handle),
 		Verification: authType,
@@ -25,7 +26,7 @@ func NewService(root string, authType Auth) *Service {
 	}
 }
 
-func (s *Service) RegisterHandle(path string, method string, handler func(ctx context.Context, request *http.Request) (response []byte, err error)) {
+func (s *Service) RegisterHandle(path string, method string, handler func(ctx context.Context, request *http.Request) (response *Response, err error)) {
 	switch method {
 	case http.MethodPost, http.MethodGet:
 
@@ -77,11 +78,17 @@ func (s *Service) ServeHTTP(resp http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	_, err = resp.Write(response)
-	if err != nil {
-		log.Printf("%+v\n", err)
-		resp.WriteHeader(http.StatusInternalServerError)
-		return
+	if response != nil {
+		for k, v := range response.Headers {
+			resp.Header().Set(k, v)
+		}
+
+		_, err = resp.Write(response.Body)
+		if err != nil {
+			log.Printf("%+v\n", err)
+			resp.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	}
 
 	return

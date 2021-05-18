@@ -5,14 +5,25 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/pkg/errors"
+	"link-logger/back/controller"
 	"link-logger/db"
 )
 
-func List(_ context.Context, _ *http.Request) (response []byte, err error) {
+func List(_ context.Context, _ *http.Request) (response *controller.Response, err error) {
 	links, err := db.GetAllLinks()
 	if err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 
-	return json.Marshal(links)
+	body, err := json.Marshal(links)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	response = &controller.Response{
+		Body: body,
+	}
+
+	return
 }

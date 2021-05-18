@@ -6,17 +6,17 @@ import (
 	"strings"
 )
 
-type Backend map[string]*Service
+type Collection map[string]*Service
 
-func CreateBackendHandler() Backend {
-	return Backend{}
+func CreateBackendHandler() Collection {
+	return Collection{}
 }
 
-func (mc Backend) BindService(service *Service) {
+func (mc Collection) BindService(service *Service) {
 	mc[service.RootPath] = service
 }
 
-func (mc Backend) ServeHTTP(resp http.ResponseWriter, req *http.Request) {
+func (mc Collection) ServeHTTP(resp http.ResponseWriter, req *http.Request) {
 	var root string
 	explodedPath := strings.Split(req.URL.Path, "/")
 	if len(explodedPath) > 1 {

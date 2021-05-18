@@ -7,6 +7,7 @@ import (
 	"net/url"
 
 	"github.com/mattn/go-sqlite3"
+	"link-logger/back/controller"
 	"link-logger/db"
 	"link-logger/db/models"
 	"link-logger/parser"
@@ -22,7 +23,7 @@ func (Exists) Error() string {
 	return "already exists"
 }
 
-func Add(_ context.Context, data *http.Request) (response []byte, err error) {
+func Add(_ context.Context, data *http.Request) (response *controller.Response, err error) {
 	body, err := ioutil.ReadAll(data.Body)
 	if err != nil {
 		return nil, Unreadable{}

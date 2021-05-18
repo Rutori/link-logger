@@ -1,4 +1,4 @@
-package controller
+package credentials
 
 import (
 	"crypto/sha256"

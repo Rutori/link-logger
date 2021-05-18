@@ -8,5 +8,5 @@ import (
 type handle struct {
 	Path   string
 	Method string
-	Func   func(ctx context.Context, request *http.Request) (response []byte, err error)
+	Func   func(ctx context.Context, request *http.Request) (response *Response, err error)
 }
