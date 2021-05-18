@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 
+	"link-logger/back"
 	"link-logger/config"
 	"link-logger/db"
 )
@@ -33,7 +34,7 @@ func main() {
 	closer := make(chan struct{})
 
 	go func() {
-		er := http.ListenAndServe(fmt.Sprintf("%s:%d", config.Storage.Host, config.Storage.Port), controllers())
+		er := http.ListenAndServe(fmt.Sprintf("%s:%d", config.Storage.Host, config.Storage.Port), back.Init())
 		if er != nil {
 			log.Fatalf("\nserve error: %s\n", er.Error())
 		}
@@ -41,7 +42,7 @@ func main() {
 
 	if config.Storage.CertPath != "" && config.Storage.KeyPath != "" {
 		go func() {
-			er := http.ListenAndServeTLS(fmt.Sprintf("%s:%d", config.Storage.Host, config.Storage.TLSPort), config.Storage.CertPath, config.Storage.KeyPath, controllers())
+			er := http.ListenAndServeTLS(fmt.Sprintf("%s:%d", config.Storage.Host, config.Storage.TLSPort), config.Storage.CertPath, config.Storage.KeyPath, back.Init())
 			if er != nil {
 				log.Fatalf("\nserve error TLS: %s\n", er.Error())
 			}

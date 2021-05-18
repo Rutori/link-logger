@@ -1,4 +1,4 @@
-package main
+package back
 
 import (
 	"net/http"
@@ -9,7 +9,7 @@ import (
 	"link-logger/back/static"
 )
 
-func controllers() http.Handler {
+func Init() http.Handler {
 
 	apiController := controller.NewService("api", credentials.ByPassword("not_a_real_password_duh"))
 	apiController.RegisterHandle("add", http.MethodPost, api.Add)
