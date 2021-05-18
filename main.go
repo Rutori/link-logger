@@ -33,7 +33,7 @@ func main() {
 	closer := make(chan struct{})
 
 	go func() {
-		er := http.ListenAndServe(fmt.Sprintf("%s:%d", config.Storage.Host, config.Storage.TLSPort), controllers())
+		er := http.ListenAndServe(fmt.Sprintf("%s:%d", config.Storage.Host, config.Storage.Port), controllers())
 		if er != nil {
 			log.Fatalf("\nserve error: %s\n", er.Error())
 		}
